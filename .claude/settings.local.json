@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.langchain4j.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:search.maven.org)",
+      "WebSearch",
+      "Bash(curl -s --max-time 15 \"https://repo1.maven.org/maven2/dev/langchain4j/langchain4j-bom/1.0.0/langchain4j-bom-1.0.0.pom\")",
+      "Bash(python3 -c \"import sys; import re; content = sys.stdin.read\\(\\); deps = re.findall\\(r'<artifactId>\\(langchain4j[^<]*\\)</artifactId>', content\\); print\\('\\\\n'.join\\(sorted\\(set\\(deps\\)\\)\\)\\)\")",
+      "Bash(curl -s --max-time 15 \"https://repo1.maven.org/maven2/dev/langchain4j/langchain4j-mcp/1.0.0/langchain4j-mcp-1.0.0.pom\")",
+      "Bash(mvn spring-boot:run -pl mcp-server)",
+      "Bash(netstat -ano)",
+      "Bash(findstr ':8080')",
+      "Bash(findstr LISTEN)",
+      "Bash(taskkill /F /PID 29724)",
+      "Bash(cmd /c \"taskkill /F /PID 29724\")",
+      "Bash(cmd /c \"tasklist /FI \\\\\"PID eq 29724\\\\\" /FO LIST\")",
+      "Bash(curl -s --max-time 3 -o /dev/null -w '%{http_code}' http://localhost:8081/sse)",
+      "Bash(cmd /c \"for /f \\\\\"tokens=5\\\\\" %a in \\('netstat -ano ^| findstr :8080 ^| findstr LISTEN'\\) do taskkill /F /PID %a\")",
+      "Bash(cmd /c \"wmic process where \\\\\"processid=29724\\\\\" get name,commandline,processid /format:list\")",
+      "Bash(cmd /c \"netstat -ano | findstr :8080\")",
+      "Bash(powershell -Command \"Stop-Process -Id 29724 -Force; Write-Host 'killed'\")",
+      "Bash(curl -s --max-time 3 -o /dev/null -w '%{http_code}' http://localhost:8080/sse)",
+      "Bash(cmd /c \"taskkill /F /PID 52452\")",
+      "Bash(powershell -Command \"Stop-Process -Id 52452 -Force\")",
+      "Bash(mvn compile:*)",
+      "Bash(curl -s http://localhost:8080/actuator/health)",
+      "Bash(curl -s http://localhost:8080/sse -o /dev/null -w '%{http_code}')"
+    ]
+  }
+}

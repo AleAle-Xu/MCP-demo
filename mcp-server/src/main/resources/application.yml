@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  tomcat:
+    connection-timeout: -1  # SSE 长连接不超时
+
+spring:
+  application:
+    name: mcp-demo-server
+  mvc:
+    async:
+      request-timeout: -1   # 异步请求不超时（SSE 需要）
+
+# 开启 /actuator/shutdown 端点，可通过 HTTP POST 优雅关闭服务
+management:
+  endpoints:
+    web:
+      exposure:
+        include: shutdown,health
+  endpoint:
+    shutdown:
+      enabled: true
+      access: unrestricted
+
+logging:
+  level:
+    com.example.mcp: INFO
+    io.modelcontextprotocol: WARN
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level [%logger{20}] %msg%n"

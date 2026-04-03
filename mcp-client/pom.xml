@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example.mcp</groupId>
+        <artifactId>mcp-demo</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>mcp-client</artifactId>
+    <name>MCP Demo - Client</name>
+    <description>MCP 客户端：基于 LangChain4j MCP Client，演示工具发现、直接调用、多服务管理</description>
+
+    <dependencies>
+        <!-- LangChain4j 核心：AiServices、ToolSpecification 等，版本由 BOM 管理(1.0.0) -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+        </dependency>
+
+        <!-- LangChain4j MCP 客户端：DefaultMcpClient、McpToolProvider、
+             HttpMcpTransport、StdioMcpTransport，版本由 BOM 管理(1.0.0-beta5) -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-mcp</artifactId>
+        </dependency>
+
+        <!-- LangChain4j OpenAI 集成：用于 AI 驱动工具调用演示（可选） -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

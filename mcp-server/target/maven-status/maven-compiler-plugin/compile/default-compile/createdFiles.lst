@@ -1,0 +1,4 @@
+com\example\mcp\server\McpServerApplication.class
+com\example\mcp\server\tools\CalculatorTool.class
+com\example\mcp\server\config\McpServerConfig.class
+com\example\mcp\server\tools\WeatherTool.class
