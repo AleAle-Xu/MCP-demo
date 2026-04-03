@@ -19,27 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * 统一管理多个 MCP 服务器的生命周期（注册、连接、查询、卸载），
  * 并聚合所有服务器的工具，为上层（AiServices 或直接调用方）提供统一入口。
- *
- * 参考大模型应用平台 MCP 工具管理模块的设计思路，关键能力：
- *   - 动态注册：运行时注册/注销 MCP 服务器，无需重启应用
- *   - 多服务聚合：通过 McpToolProvider 把所有已连接服务器的工具聚合成统一的 ToolProvider
- *   - 工具发现：列出指定服务器或全部服务器的工具清单
- *   - 健康检查：检测各 MCP 服务器的连接状态
- *   - 资源释放：实现 AutoCloseable，关闭时自动断开所有连接
- *
- * 典型使用流程：
- *
- *   McpServerManager manager = new McpServerManager();
- *   manager.register(McpServerConfig.http("weather", "天气服务", "http://localhost:8080/sse"));
- *   manager.register(McpServerConfig.http("db",      "数据库服务", "http://localhost:8081/sse"));
- *
- *   McpToolProvider toolProvider = manager.buildToolProvider();
- *   MyAssistant ai = AiServices.builder(MyAssistant.class)
- *       .chatModel(model)
- *       .toolProvider(toolProvider)
- *       .build();
- *
- *   manager.close(); // 使用完毕后释放资源，或用 try-with-resources
  */
 public class McpServerManager implements AutoCloseable {
 
@@ -52,10 +31,6 @@ public class McpServerManager implements AutoCloseable {
     // 已建立连接的 MCP 客户端表（key → McpClient）
     // McpClient 是 AutoCloseable，关闭时会断开 SSE 连接或终止子进程
     private final Map<String, McpClient> clients = new ConcurrentHashMap<>();
-
-    // =========================================================================
-    //  注册与注销
-    // =========================================================================
 
     /**
      * 注册并连接一个 MCP 服务器
@@ -121,9 +96,6 @@ public class McpServerManager implements AutoCloseable {
         }
     }
 
-    // =========================================================================
-    //  工具查询
-    // =========================================================================
 
     /**
      * 查询指定服务器的工具列表
@@ -158,9 +130,6 @@ public class McpServerManager implements AutoCloseable {
         return result;
     }
 
-    // =========================================================================
-    //  核心：构建聚合 McpToolProvider
-    // =========================================================================
 
     /**
      * 构建聚合所有已注册服务器工具的 McpToolProvider
@@ -188,9 +157,6 @@ public class McpServerManager implements AutoCloseable {
                 .build();
     }
 
-    // =========================================================================
-    //  健康检查与状态查询
-    // =========================================================================
 
     /**
      * 检查指定服务器的连接健康状态
@@ -237,10 +203,6 @@ public class McpServerManager implements AutoCloseable {
         return clients.get(key);
     }
 
-    // =========================================================================
-    //  内部：根据配置构建传输层
-    // =========================================================================
-
     /**
      * 根据配置创建 MCP 传输层
      *
@@ -266,9 +228,6 @@ public class McpServerManager implements AutoCloseable {
         }
     }
 
-    // =========================================================================
-    //  资源释放
-    // =========================================================================
 
     /**
      * 关闭所有 MCP 连接，释放资源

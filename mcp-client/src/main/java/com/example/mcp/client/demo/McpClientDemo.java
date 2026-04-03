@@ -28,7 +28,7 @@ public class McpClientDemo {
     private static final Logger log = LoggerFactory.getLogger(McpClientDemo.class);
 
     // MCP 服务端地址（与 mcp-server 的 application.yml 对应）
-    private static final String SERVER_SSE_URL = "http://localhost:8080/sse";
+    private static final String SERVER_SSE_URL = "http://localhost:18080/sse";
 
     public static void main(String[] args) throws Exception {
         log.info("╔══════════════════════════════════════════════╗");

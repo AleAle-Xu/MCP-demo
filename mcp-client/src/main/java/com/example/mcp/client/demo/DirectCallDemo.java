@@ -15,35 +15,27 @@ import java.util.Map;
 /**
  * MCP 直接调用演示
  *
- * <p>本类演示不经过 AI 模型、直接通过 LangChain4j MCP 客户端调用工具的方式。
- * 适用场景：
- * <ul>
- *   <li>开发阶段验证工具是否正常工作</li>
- *   <li>后端服务直接调用 MCP 工具（不走 LLM）</li>
- *   <li>工具测试、集成测试</li>
- * </ul>
+ * 本类演示不经过 AI 模型、直接通过 LangChain4j MCP 客户端调用工具的方式。
  *
- * <p>使用前请先启动 mcp-server 模块：
- * <pre>
+ * 使用前请先启动 mcp-server 模块：
  *   mvn spring-boot:run -pl mcp-server
- * </pre>
  */
 public class DirectCallDemo {
 
     private static final Logger log = LoggerFactory.getLogger(DirectCallDemo.class);
 
     /** MCP 服务端地址 */
-    private static final String SERVER_SSE_URL = "http://localhost:8080/sse";
+    private static final String SERVER_SSE_URL = "http://localhost:18080/sse";
 
     public static void main(String[] args) throws Exception {
         log.info("========== MCP 直接调用演示 ==========");
-        log.info("请确保 mcp-server 已在 http://localhost:8080 启动");
+        log.info("请确保 mcp-server 已在 http://localhost:18080 启动");
         log.info("");
 
-        // ── 使用 try-with-resources 确保资源自动释放 ───────────────────────
+        // 使用 try-with-resources 确保资源自动释放
         try (McpServerManager manager = new McpServerManager()) {
 
-            // ── Step 1：注册 MCP 服务器 ──────────────────────────────────────
+            // Step 1：注册 MCP 服务器
             // 此步骤会：
             //   1. 建立 SSE 长连接（GET /sse）
             //   2. 执行 MCP 握手（initialize → initialized）
@@ -56,7 +48,7 @@ public class DirectCallDemo {
                     "包含计算器和天气查询两个工具"
             ));
 
-            // ── Step 2：查询工具列表（tools/list）────────────────────────────
+            // Step 2：查询工具列表（tools/list）
             log.info("\n【Step 2】查询工具列表...");
             List<ToolSpecification> tools = manager.listTools("demo-server");
             log.info("发现 {} 个工具:", tools.size());
@@ -67,7 +59,7 @@ public class DirectCallDemo {
                 }
             }
 
-            // ── Step 3：直接调用计算器工具（tools/call）──────────────────────
+            // Step 3：直接调用计算器工具（tools/call）
             log.info("\n【Step 3】直接调用工具 calculator...");
 
             // 获取底层 McpClient（Manager 对外透明，这里用于演示）
@@ -75,15 +67,15 @@ public class DirectCallDemo {
             // 此处为演示目的直接获取
             demo_calculator(manager);
 
-            // ── Step 4：直接调用天气查询工具 ────────────────────────────────
+            // Step 4：直接调用天气查询工具
             log.info("\n【Step 4】直接调用工具 weather...");
             demo_weather(manager);
 
-            // ── Step 5：演示多服务管理能力 ──────────────────────────────────
+            // Step 5：演示多服务管理能力
             log.info("\n【Step 5】演示多服务管理...");
             demo_multiServer(manager);
 
-            // ── Step 6：健康检查 ─────────────────────────────────────────────
+            // Step 6：健康检查
             log.info("\n【Step 6】健康检查...");
             Map<String, Boolean> health = manager.checkAllHealth();
             health.forEach((k, v) -> log.info("  服务器 [{}]: {}", k, v ? "✅ 健康" : "❌ 异常"));

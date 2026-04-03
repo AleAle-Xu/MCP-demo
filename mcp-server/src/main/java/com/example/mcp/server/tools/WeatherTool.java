@@ -42,7 +42,7 @@ public class WeatherTool {
     /**
      * 构建天气查询工具的 MCP 注册规格
      *
-     * <p>可选参数设计：JSON Schema 的 required 数组只列必填参数，
+     * 可选参数设计：JSON Schema 的 required 数组只列必填参数，
      * 未列出的参数（unit）是可选的，Handler 中用 getOrDefault 处理缺省。
      */
     public McpServerFeatures.SyncToolSpecification buildToolSpec() {

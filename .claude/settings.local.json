@@ -25,7 +25,18 @@
       "Bash(powershell -Command \"Stop-Process -Id 52452 -Force\")",
       "Bash(mvn compile:*)",
       "Bash(curl -s http://localhost:8080/actuator/health)",
-      "Bash(curl -s http://localhost:8080/sse -o /dev/null -w '%{http_code}')"
+      "Bash(curl -s http://localhost:8080/sse -o /dev/null -w '%{http_code}')",
+      "Bash(java -version)",
+      "Bash(mvn -version)",
+      "Read(//usr/**)",
+      "Read(//opt/**)",
+      "Read(//home/xujiale/.sdkman/candidates/maven/current/**)",
+      "Read(//home/xujiale/software/**)",
+      "Bash(sudo apt-get:*)",
+      "Read(//home/xujiale/download/**)",
+      "Bash(curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz -o maven.tar.gz)",
+      "Bash(tar -xzf maven.tar.gz)",
+      "Bash(~/software/apache-maven-3.9.6/bin/mvn package:*)"
     ]
   }
 }

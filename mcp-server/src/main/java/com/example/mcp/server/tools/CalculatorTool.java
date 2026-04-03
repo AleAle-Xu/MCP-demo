@@ -13,16 +13,15 @@ import java.util.Map;
 /**
  * 计算器 MCP 工具
  *
- * MCP Tool 核心概念：
- * 
- *   Tool = MCP 协议中的能力单元，AI 模型发现并决策调用
- *   每个 Tool 包含：name（唯一标识）、description（AI理解用途）、inputSchema（参数格式）
- *   客户端通过 tools/list 获取工具列表，通过 tools/call 传参调用
+ * 每个 Tool 包含：
+ * - name（唯一标识）
+ * - description（AI理解用途）
+ * - inputSchema（参数格式）
  * 
  * 工具注册三要素：
- *   输入 Schema（JSON Schema）：让 AI 知道应该传什么参数
- *   Tool 定义（name + description + schema）：AI 依此决定是否调用
- *   Handler 函数（BiFunction）：参数已由框架解析为 Map，执行后返回 CallToolResult
+ * - 定义输入 Schema（JSON Schema）：让 AI 知道应该传什么参数
+ * - 定义 Tool（name + description + schema）：AI 依此决定是否调用
+ * - 定义 Handler 函数（BiFunction）：参数已由框架解析为 Map，执行后返回 CallToolResult
  */
 @Slf4j
 @Component
@@ -30,7 +29,6 @@ public class CalculatorTool {
 
     /**
      * 构建计算器工具的 MCP 注册规格（SyncToolSpecification）
-     *
      * SyncToolSpecification = Tool定义 + Handler函数 的封装对象，
      * 传给 McpServer.sync().tools() 完成注册。
      */
