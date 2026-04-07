@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * MCP 客户端集成测试
  *
- * <p><b>运行前提</b>：mcp-server 必须已在 8080 端口运行。
+ * <p><b>运行前提</b>：mcp-server 必须已在 18080 端口运行。
  * <pre>
  *   cd mcp-demo
  *   mvn spring-boot:run -pl mcp-server
@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class McpClientIntegrationTest {
 
-    private static final String SSE_URL = "http://localhost:8080/sse";
+    private static final String SSE_URL = "http://localhost:18080/sse";
 
     /** 整个测试类共用一个 Manager（避免重复建连） */
     private static McpServerManager manager;
@@ -107,13 +107,14 @@ class McpClientIntegrationTest {
 
     @Test
     @Order(6)
-    @DisplayName("calculator - 除以零应返回错误信息")
+    @DisplayName("calculator - 除以零应抛出 ToolExecutionException")
     void testCalculatorDivideByZero() {
-        String result = callTool("calculator",
-                "{\"operation\":\"divide\",\"a\":5,\"b\":0}");
-        // 工具返回 isError=true 时，LangChain4j 会将错误内容作为结果字符串返回
-        assertTrue(result.contains("错误") || result.contains("error") || result.contains("零"),
-                "除以零应返回错误信息，实际: " + result);
+        // 1.12.2 中工具返回 isError=true 时，langchain4j 会抛出 ToolExecutionException
+        Exception ex = assertThrows(Exception.class,
+                () -> callTool("calculator", "{\"operation\":\"divide\",\"a\":5,\"b\":0}"));
+        String msg = ex.getMessage() != null ? ex.getMessage() : "";
+        assertTrue(msg.contains("错误") || msg.contains("error") || msg.contains("零"),
+                "除以零应包含错误信息，实际: " + msg);
     }
 
     // ─── 测试 3：weather 工具 ────────────────────────────────────────────────
@@ -160,6 +161,6 @@ class McpClientIntegrationTest {
                 .arguments(argumentsJson)
                 .build();
 
-        return client.executeTool(request);
+        return client.executeTool(request).resultText();
     }
 }

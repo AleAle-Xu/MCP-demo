@@ -26,8 +26,8 @@ mcp-demo/
 
 | 依赖 | 版本 | 说明 |
 |---|---|---|
-| `langchain4j-bom` | 1.0.0 | LangChain4j 版本管理 |
-| `langchain4j-mcp` | 1.0.0-beta5 | MCP 客户端（由 BOM 管理） |
+| `langchain4j-bom` | 1.12.2 | LangChain4j 版本管理 |
+| `langchain4j-mcp` | 1.12.2-beta22 | MCP 客户端（由 BOM 管理） |
 | `mcp-spring-webmvc` | 0.10.0 | MCP 官方 Java SDK 服务端 |
 | `spring-boot` | 3.4.4 | 服务端 HTTP 框架 |
 | Jackson | **2.19.0** | ⚠️ 需覆盖 Spring Boot BOM 的 2.18.x，MCP SDK 要求 2.19+ |

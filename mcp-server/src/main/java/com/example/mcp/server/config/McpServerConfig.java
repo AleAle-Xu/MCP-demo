@@ -77,8 +77,8 @@ public class McpServerConfig {
         log.info("==================================================");
         log.info("MCP Server 启动完成");
         log.info("  工具列表: calculator, weather");
-        log.info("  SSE 端点:  GET  http://localhost:8080/sse");
-        log.info("  消息端点:  POST http://localhost:8080/mcp/message");
+        log.info("  SSE 端点:  GET  http://localhost:18080/sse");
+        log.info("  消息端点:  POST http://localhost:18080/mcp/message");
         log.info("==================================================");
 
         return server;

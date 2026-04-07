@@ -36,7 +36,11 @@
       "Read(//home/xujiale/download/**)",
       "Bash(curl -fsSL https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz -o maven.tar.gz)",
       "Bash(tar -xzf maven.tar.gz)",
-      "Bash(~/software/apache-maven-3.9.6/bin/mvn package:*)"
+      "Bash(~/software/apache-maven-3.9.6/bin/mvn package:*)",
+      "Bash(xargs -I{} jar tf {})",
+      "Read(//tmp/**)",
+      "Bash(javap -cp ~/.m2/repository/dev/langchain4j/langchain4j-core/1.12.2/langchain4j-core-1.12.2.jar dev.langchain4j.service.tool.ToolExecutionResult)",
+      "Bash(javap -cp ~/.m2/repository/dev/langchain4j/langchain4j/1.12.2/langchain4j-1.12.2.jar dev.langchain4j.service.tool.ToolExecutionResult)"
     ]
   }
 }

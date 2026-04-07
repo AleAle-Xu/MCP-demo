@@ -10,9 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 旨在标准化 AI 模型与外部工具/数据源之间的交互方式。
  *
  * 本服务启动后：
- *   - 监听端口 8080
- *   - 暴露 SSE 端点：{@code GET  http://localhost:8080/sse}
- *   - 暴露消息端点：{@code POST http://localhost:8080/mcp/message}
+ *   - 监听端口 18080
+ *   - 暴露 SSE 端点：{@code GET  http://localhost:18080/sse}
+ *   - 暴露消息端点：{@code POST http://localhost:18080/mcp/message}
  *   - 可供 MCP 客户端连接并调用 calculator 和 weather 工具
  * 
  * 启动方式：

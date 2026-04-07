@@ -98,7 +98,7 @@ public class McpClientDemo {
                         // arguments 是 JSON 字符串，必须与工具 Schema 匹配
                         .arguments("{\"operation\":\"multiply\",\"a\":123.5,\"b\":456.7}")
                         .build();
-                String calcResult = calcClient.executeTool(calcRequest);
+                String calcResult = calcClient.executeTool(calcRequest).resultText();
                 log.info("  calculator 返回: {}", calcResult);
             }
 
@@ -110,7 +110,7 @@ public class McpClientDemo {
                         .name("weather")
                         .arguments("{\"city\":\"北京\",\"unit\":\"celsius\"}")
                         .build();
-                String weatherResult = weatherClient.executeTool(weatherRequest);
+                String weatherResult = weatherClient.executeTool(weatherRequest).resultText();
                 log.info("  weather 返回:\n{}", weatherResult);
             }
 

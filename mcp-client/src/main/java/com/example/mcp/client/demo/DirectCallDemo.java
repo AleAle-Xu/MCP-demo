@@ -197,7 +197,7 @@ public class DirectCallDemo {
             // 通过底层 McpClient 直接调用工具
             McpClient client = manager.getClient(serverKey);
             if (client == null) return "服务器 [" + serverKey + "] 未连接";
-            return client.executeTool(req);
+            return client.executeTool(req).resultText();
 
         } catch (Exception e) {
             return "调用失败: " + e.getMessage();
