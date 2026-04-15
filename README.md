@@ -63,17 +63,59 @@ MCP Server 启动完成
 
 ### 第二步：运行客户端 Demo
 
-新开一个终端，在项目根目录执行：
+新开一个终端，在项目根目录执行以下任一 Demo：
+
+#### 代理说明（重要，必读）
+
+本项目同时需要访问 **本地 MCP 服务**（localhost）和 **外部 AI API**（OpenAI 等）。
+如果系统设置了代理（`http_proxy` 环境变量），需要正确配置：
+
+- `localhost` 流量 **绕过**代理（否则 MCP 服务端返回 `Bad Request`）
+- 外部 API 流量 **保留**代理（否则在国内无法访问 OpenAI 等服务）
+
+下方命令通过以下方式实现：显式设置代理地址（从环境变量读取）+ 将 localhost 加入例外名单。
+
+#### DirectCallDemo（直接调用，无需 AI Key，推荐入门）
+
+演示内容：注册服务器 → 查询工具列表 → 直接调用 calculator/weather 工具 → 健康检查
 
 ```bash
 cd /home/xujiale/javacode/MCP-demo
-mvn exec:java -pl mcp-client \
+_PH=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f1)
+_PP=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f2 | cut -d/ -f1)
+mvn compile exec:java -pl mcp-client \
   -Dexec.mainClass="com.example.mcp.client.demo.DirectCallDemo" \
-  -Dhttp.proxyHost= -Dhttps.proxyHost= \
+  ${_PH:+-Dhttp.proxyHost=$_PH -Dhttp.proxyPort=$_PP -Dhttps.proxyHost=$_PH -Dhttps.proxyPort=$_PP} \
   -Dhttp.nonProxyHosts="localhost|127.0.0.1"
 ```
 
-> ⚠️ 必须加 `-Dhttp.proxyHost=` 等参数，否则系统 `http_proxy` 环境变量会导致对 localhost 的请求经过代理，服务端返回 `Bad Request`。
+#### McpClientDemo（完整演示，无需 AI Key 可运行 Demo1）
+
+演示内容：
+- **Demo 1**：直接调用工具（无 AI 介入）
+- **Demo 2**：AI 驱动工具调用（需配置 `OPENAI_API_KEY` 环境变量，无 Key 时自动跳过）
+
+```bash
+cd /home/xujiale/javacode/MCP-demo
+_PH=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f1)
+_PP=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f2 | cut -d/ -f1)
+mvn compile exec:java -pl mcp-client \
+  -Dexec.mainClass="com.example.mcp.client.demo.McpClientDemo" \
+  ${_PH:+-Dhttp.proxyHost=$_PH -Dhttp.proxyPort=$_PP -Dhttps.proxyHost=$_PH -Dhttps.proxyPort=$_PP} \
+  -Dhttp.nonProxyHosts="localhost|127.0.0.1"
+```
+
+如需运行 Demo 2（AI 驱动），额外设置 API Key：
+
+```bash
+cd /home/xujiale/javacode/MCP-demo
+_PH=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f1)
+_PP=$(echo "${http_proxy:-}" | sed 's|https\?://||' | cut -d: -f2 | cut -d/ -f1)
+OPENAI_API_KEY=sk-xxx mvn compile exec:java -pl mcp-client \
+  -Dexec.mainClass="com.example.mcp.client.demo.McpClientDemo" \
+  ${_PH:+-Dhttp.proxyHost=$_PH -Dhttp.proxyPort=$_PP -Dhttps.proxyHost=$_PH -Dhttps.proxyPort=$_PP} \
+  -Dhttp.nonProxyHosts="localhost|127.0.0.1"
+```
 
 ---
 

@@ -11,7 +11,8 @@
       "Bash(/home/xujiale/software/apache-maven-3.9.6/bin/mvn compile:*)",
       "Bash(/home/xujiale/software/apache-maven-3.9.6/bin/mvn exec:java -pl mcp-client -Dexec.mainClass=com.example.mcp.client.demo.DirectCallDemo -Dhttp.proxyHost= -Dhttps.proxyHost= '-Dhttp.nonProxyHosts=localhost|127.0.0.1')",
       "Read(//Users/mh/Desktop/code/**)",
-      "Read(//Users/fanzhang/PycharmProjects/**)"
+      "Read(//Users/fanzhang/PycharmProjects/**)",
+      "Bash(echo \"PID: $!\")"
     ],
     "additionalDirectories": [
       "/home/xujiale"

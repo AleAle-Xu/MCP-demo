@@ -25,11 +25,9 @@ public class McpServerManager implements AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(McpServerManager.class);
 
     // 已注册的服务器配置表（key → config）
-    // 使用 ConcurrentHashMap 保证多线程下注册/注销的安全
     private final Map<String, McpServerConfig> configs = new ConcurrentHashMap<>();
 
     // 已建立连接的 MCP 客户端表（key → McpClient）
-    // McpClient 是 AutoCloseable，关闭时会断开 SSE 连接或终止子进程
     private final Map<String, McpClient> clients = new ConcurrentHashMap<>();
 
     /**
